@@ -12,7 +12,7 @@ namespace MyProtocolsAPI_DanielRamírez.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [ApiKey]
+    //[ApiKey]
     public class UsersController : ControllerBase
     {
         private readonly MyProtocolsDBContext _context;
@@ -21,6 +21,24 @@ namespace MyProtocolsAPI_DanielRamírez.Controllers
         {
             _context = context;
         }
+
+        //Este get Valida el usuario que se quiere ingresar en la pagina
+        //GET: api/users
+
+        [HttpGet("ValidateLogin")]
+
+        public async Task<ActionResult<User>> ValidateLogin(string username, string password) 
+        {
+            var user = await _context.Users.SingleOrDefaultAsync(e => e.Email == username && e.Password == password);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(user);
+        }
+
 
         // GET: api/Users
         [HttpGet]
