@@ -23,7 +23,7 @@ namespace MyProtocolsAPI_DanielRamírez.Models
         public bool? IsBlocked { get; set; }
         public int UserRoleId { get; set; }
 
-        public virtual UserRole UserRole { get; set; } = null!;
+        public virtual UserRole? UserRole { get; set; } = null!;
         public virtual ICollection<ProtocolCategory> ProtocolCategories { get; set; }
         public virtual ICollection<ProtocolStep> ProtocolSteps { get; set; }
         public virtual ICollection<Protocol> Protocols { get; set; }

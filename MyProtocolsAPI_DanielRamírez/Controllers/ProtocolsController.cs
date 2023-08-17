@@ -12,7 +12,7 @@ namespace MyProtocolsAPI_DanielRamírez.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [ApiKey]
+    //[ApiKey]
     public class ProtocolsController : ControllerBase
     {
         private readonly MyProtocolsDBContext _context;
@@ -49,6 +49,25 @@ namespace MyProtocolsAPI_DanielRamírez.Controllers
             }
 
             return protocol;
+        }
+
+        //
+        // GET: api/Protocols/GetProtocolListByUser?id=27
+        [HttpGet("GetProtocolListByUser")]
+        public async Task<ActionResult<IEnumerable<Protocol>>> GetProtocolListByUser(int id)
+        {
+            if (_context.Protocols == null)
+            {
+                return NotFound();
+            }
+            var protocolList = await _context.Protocols.Where(p => p.UserId.Equals(id)).ToListAsync();
+
+            if (protocolList == null)
+            {
+                return NotFound();
+            }
+
+            return protocolList;
         }
 
         // PUT: api/Protocols/5

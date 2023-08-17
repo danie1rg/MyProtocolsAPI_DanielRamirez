@@ -14,7 +14,7 @@ namespace MyProtocolsAPI_DanielRamírez.Models
         public string Description { get; set; } = null!;
         public int UserId { get; set; }
 
-        public virtual User User { get; set; } = null!;
-        public virtual ICollection<Protocol> Protocols { get; set; }
+        public virtual User? User { get; set; } = null!;
+        public virtual ICollection<Protocol>? Protocols { get; set; }
     }
 }
