@@ -154,6 +154,8 @@ namespace MyProtocolsAPI_DanielRamírez.Controllers
                 _context.Entry(NewEFUser).State = EntityState.Modified;
             }
 
+            
+
 
             /**User NewEFUser = new() 
             {
@@ -185,6 +187,48 @@ namespace MyProtocolsAPI_DanielRamírez.Controllers
 
             return Ok();
         }
+
+
+        // PUT: api/Users/5
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> PatchUser(int id, UserDTO user)
+        {
+            if (id != user.IDUsuario)
+            {
+                return BadRequest();
+            }
+
+            User? NewEFUser = GetUserByID(user.IDUsuario);
+
+            if (NewEFUser != null)
+            {
+                NewEFUser.Password = user.Contrasennia;
+
+                _context.Entry(NewEFUser).State = EntityState.Modified;
+            }
+
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!UserExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return Ok();
+        }
+
 
         // POST: api/Users
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
